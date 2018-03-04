@@ -4,13 +4,6 @@ import json
 tree = etree.parse(open("test.svg", 'r'))
 
 indent = 0
-data = {}
-
-def recursive_dict(element):
-    if element.text == None and len(element.attrib):
-        return element.tag, element.attrib
-    return element.tag, \
-            dict(map(recursive_dict, element)) or element.text
 
 def printRecur(root):
     """Recursively prints the tree."""
@@ -21,7 +14,6 @@ def printRecur(root):
         root.tag = root.tag[i+1:]
 
     print ' '*indent + '%s: %s %s' % (root.tag.title(), root.attrib.get('id', ""), root.attrib.get('fill', ""))
-    data["xml"] = element;
     
     indent += 4
     for elem in root.getchildren():
@@ -58,8 +50,10 @@ def etree_to_dict(tree, only_child):
     else:        
         return {tree.tag: mydict}
 
-def dict_to_json(dictionary, json_output):
-    print json.dumps(dictionary, sort_keys=True, indent=4)
+def dict_to_json(dictionary):
+    return json.dumps(dictionary, sort_keys=True, indent=4)
+
+def dict_to_json_file(dictionary, json_output):
     '''Coverts a dictionary into a json file.'''
     f = open(json_output, 'w')
     f.write(json.dumps(dictionary, sort_keys=True, indent=4))
@@ -68,6 +62,10 @@ def dict_to_json(dictionary, json_output):
 
 root = tree.getroot()
 root.attrib.pop("viewBox", None)
-dict_to_json(etree_to_dict(root, True), "json.json")
-#printRecur(root)
+print dict_to_json(etree_to_dict(root, True))
+
+
+
+
+
 
