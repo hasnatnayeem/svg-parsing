@@ -49,7 +49,7 @@ def etree_to_dict(tree, only_child):
     children = tree.getchildren()
     if children:
         if len(children) > 1:
-            mydict['children'] = [etree_to_dict(child, False) for child in children]
+            mydict = [etree_to_dict(child, False) for child in children]
         else:
             child = children[0]
             mydict[child.tag] = etree_to_dict(child, True)
