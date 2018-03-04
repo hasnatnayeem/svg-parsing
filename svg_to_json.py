@@ -1,7 +1,9 @@
 from lxml import etree
 import json
+import sys
 
-tree = etree.parse(open("test.svg", 'r'))
+file_name = sys.argv[1]
+tree = etree.parse(open(file_name, 'r'))
 
 indent = 0
 
